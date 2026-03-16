@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "Landing Zone",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "files.associations": {
+      "*.html": "html",
+      "*.css": "css"
+    },
+    "livePreview.defaultPreviewPath": "index.html",
+    "emmet.includeLanguages": {
+      "html": "html"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.live-server",
+      "esbenp.prettier-vscode",
+      "ecmel.vscode-html-css"
+    ]
+  }
+}

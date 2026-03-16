@@ -1,0 +1,226 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2a2d3a;
+  --accent: #6c8eff;
+  --accent-hover: #8aa3ff;
+  --text: #e8eaf0;
+  --muted: #8b8fa8;
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+main {
+  max-width: 720px;
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(108, 142, 255, 0.12);
+}
+
+.card .icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.card p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Shared page styles */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.back:hover { color: var(--accent-hover); }
+
+.page h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page .subtitle {
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+/* Resume styles */
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.entry {
+  margin-bottom: 1.25rem;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.entry h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.entry .date {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.entry .org {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.entry ul {
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: var(--border);
+  border-radius: 4px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+/* Projects styles */
+.project-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.project-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.project-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.project-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.project-links a:hover { color: var(--accent-hover); }

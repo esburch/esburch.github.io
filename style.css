@@ -1,24 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Focus indicators — visible for all keyboard/assistive-tech users */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
 :root {
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
   --bg: #0f1117;
   --surface: #1a1d27;
   --border: #2a2d3a;
   --accent: #6c8eff;
   --accent-hover: #8aa3ff;
+  --accent-glow: rgba(108, 142, 255, 0.12);
   --text: #e8eaf0;
   --muted: #8b8fa8;
   --radius: 12px;
+  --radius-sm: 4px;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -26,9 +44,23 @@ body {
   padding: 2rem;
 }
 
+/* Subtle technical grid — adds depth without decoration */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: -1;
+}
+
 main {
   max-width: 720px;
   width: 100%;
+  animation: fade-up 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
 }
 
 header {
@@ -37,19 +69,22 @@ header {
 }
 
 header h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 12vw, 8rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
+/* Index styles */
 .tagline {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   color: var(--muted);
-  font-size: 1.1rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
 }
 
 .cards {
@@ -71,10 +106,21 @@ header h1 {
   gap: 0.5rem;
 }
 
-.card:hover {
+.card:hover,
+.card:focus-visible {
   border-color: var(--accent);
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(108, 142, 255, 0.12);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px var(--accent-glow);
+  transition-duration: 0.1s;
+}
+
+.card:focus-visible {
+  outline-offset: 2px;
 }
 
 .card .icon {
@@ -83,6 +129,7 @@ header h1 {
 }
 
 .card h2 {
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 600;
   margin-top: 0.25rem;
@@ -99,6 +146,7 @@ header h1 {
   max-width: 720px;
   margin: 0 auto;
   padding: 2rem;
+  align-self: flex-start; /* Anchor to top; don't float on tall viewports */
 }
 
 .back {
@@ -109,12 +157,21 @@ header h1 {
   text-decoration: none;
   font-size: 0.9rem;
   margin-bottom: 2rem;
+  min-height: 44px;
+  padding-inline: 0.25rem;
+  transition: color 0.2s, transform 0.2s;
 }
 
-.back:hover { color: var(--accent-hover); }
+.back:hover {
+  color: var(--accent-hover);
+  transform: translateX(-3px);
+}
 
 .page h1 {
-  font-size: 2rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
 }
 
@@ -123,13 +180,49 @@ header h1 {
   margin-bottom: 2.5rem;
 }
 
+.page .subtitle a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.page .subtitle a:hover {
+  color: var(--accent-hover);
+}
+
 /* Resume styles */
+.section-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted);
+  overflow-wrap: break-word;
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skill-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.skill-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-width: 200px;
+}
+
 .section {
   margin-bottom: 2.5rem;
 }
 
 .section h2 {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
@@ -171,6 +264,7 @@ header h1 {
   font-size: 0.9rem;
   line-height: 1.7;
   color: var(--muted);
+  overflow-wrap: break-word;
 }
 
 .tags {
@@ -181,7 +275,7 @@ header h1 {
 
 .tag {
   background: var(--border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 0.25rem 0.65rem;
   font-size: 0.8rem;
   color: var(--text);
@@ -198,11 +292,22 @@ header h1 {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
+  transition: border-color 0.2s;
 }
 
-.project-card h3 {
+.project-card:hover {
+  border-color: var(--muted);
+}
+
+.project-card h2 {
+  font-family: var(--font-heading);
   font-size: 1.05rem;
+  font-weight: 600;
   margin-bottom: 0.4rem;
+}
+
+.project-card .tags {
+  margin-bottom: 0.75rem;
 }
 
 .project-card p {
@@ -210,6 +315,7 @@ header h1 {
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 1rem;
+  overflow-wrap: break-word;
 }
 
 .project-links {
@@ -221,6 +327,115 @@ header h1 {
   color: var(--accent);
   text-decoration: none;
   font-size: 0.85rem;
+  padding: 0.5rem 0.25rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s;
 }
 
 .project-links a:hover { color: var(--accent-hover); }
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  main {
+    animation: none;
+  }
+
+  .card {
+    transition: border-color 0.2s;
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+
+  .card:active {
+    transform: none;
+  }
+
+  .back:hover {
+    transform: none;
+  }
+}
+
+/* Mobile — tighten spacing once content naturally fills narrow viewports */
+@media (max-width: 560px) {
+  body {
+    padding: 1.25rem;
+  }
+
+  .page {
+    padding: 1.25rem;
+  }
+
+  .skill-label {
+    min-width: 130px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Print — resume should be readable on paper */
+@media print {
+  :root {
+    --bg: white;
+    --surface: white;
+    --border: #ccc;
+    --text: #111;
+    --muted: #444;
+    --accent: #333;
+    --accent-hover: #333;
+  }
+
+  body {
+    display: block;
+    padding: 0;
+    min-height: auto;
+    font-size: 10.5pt;
+    background: white;
+    color: #111;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0.6in 0.75in;
+    margin: 0;
+  }
+
+  .back {
+    display: none;
+  }
+
+  /* Remove decorative chrome */
+  .card,
+  .project-card {
+    box-shadow: none;
+    border-color: #ddd;
+  }
+
+  /* Avoid splitting entries across pages */
+  .entry {
+    break-inside: avoid;
+  }
+
+  .section {
+    break-inside: avoid;
+  }
+
+  /* Links: show href for external links, suppress for tel/mailto */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  a[href^="tel"]::after,
+  a[href^="mailto"]::after {
+    content: none;
+  }
+}

@@ -1,0 +1,10 @@
+# Claude Code session data — project memory, conversation history, plugin cache
+.claude/
+
+# Draft and working files — not part of the deployed site
+resume-updated.md
+ui-kit.html
+
+# OS artifacts
+.DS_Store
+Thumbs.db

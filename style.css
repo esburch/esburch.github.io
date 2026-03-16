@@ -24,17 +24,24 @@
   --bg: #0f1117;
   --surface: #1a1d27;
   --border: #2a2d3a;
-  --accent: #6c8eff;
-  --accent-hover: #8aa3ff;
-  --accent-glow: rgba(108, 142, 255, 0.12);
-  --text: #e8eaf0;
-  --muted: #8b8fa8;
+  --accent: #c49a6c;
+  --accent-hover: #d4b080;
+  --accent-glow: rgba(196, 154, 108, 0.18);
+  --text: #ede9e0;
+  --muted: #9a9080;
   --radius: 12px;
   --radius-sm: 4px;
 }
 
+/* Subtle technical grid via background-image — background-attachment: fixed keeps it
+   viewport-relative like the old body::before approach, without stacking context issues */
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
@@ -42,19 +49,6 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
-}
-
-/* Subtle technical grid — adds depth without decoration */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: -1;
 }
 
 main {
@@ -397,8 +391,8 @@ header h1 {
     color: #111;
   }
 
-  body::before {
-    display: none;
+  body {
+    background-image: none;
   }
 
   .page {

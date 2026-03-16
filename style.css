@@ -289,7 +289,7 @@ header h1::after {
   color: var(--accent);
   text-decoration: none;
   transition: color 0.15s;
-  padding-block: 0.2rem; /* increase tap target on mobile */
+  padding-block: 0.75rem; /* 44px minimum touch target */
   display: inline-block;
 }
 

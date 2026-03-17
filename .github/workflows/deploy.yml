@@ -24,6 +24,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.RESUME_CONTENT_TOKEN }}
+
+      - name: Build resume from markdown
+        run: python scripts/build_resume.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

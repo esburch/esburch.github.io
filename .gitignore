@@ -1,6 +1,9 @@
 # Claude Code session data — project memory, conversation history, plugin cache
 .claude/
 
+# Generated files — built from resume-content submodule by scripts/build_resume.py
+resume.html
+
 # Draft and working files — not part of the deployed site
 resume-updated.md
 ui-kit.html

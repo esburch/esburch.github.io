@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
-
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -25,6 +23,27 @@
   54%  { opacity: 0.97; }
   56%  { opacity: 1; }
   100% { opacity: 1; }
+}
+
+/* Skip-to-content link — visible on keyboard focus, hidden otherwise */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.5rem 1.25rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 10000;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* Focus indicators — visible for all keyboard/assistive-tech users */
@@ -78,22 +97,20 @@ body::before {
   z-index: 9999;
 }
 
-/* CRT vignette + phosphor noise — screen darker at edges, slight grain */
+/* CRT vignette — screen darker at edges */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.75) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background: radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
   z-index: 9998;
-  opacity: 0.6;
 }
 
 main {
   max-width: 720px;
   width: 100%;
+  will-change: opacity, transform;
   animation: fade-up 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
 }
 
@@ -111,7 +128,7 @@ header {
 
 header h1 {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 12vw, 8rem);
+  font-size: clamp(3rem, 12vw, 8rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -134,6 +151,21 @@ header h1::after {
   content: '_';
   animation: blink 1.2s step-end 5;
   animation-fill-mode: forwards;
+}
+
+/* Surname hidden on narrow viewports — first name fills the hero at large size */
+.name-suffix {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  header h1 {
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+  }
+
+  .name-suffix {
+    display: inline;
+  }
 }
 
 /* Index styles */
@@ -175,16 +207,14 @@ header h1::after {
   text-shadow: none;
 }
 
-.card:hover .icon,
-.card:focus-visible .icon {
-  color: var(--bg);
-}
 
 .card:hover p,
 .card:focus-visible p {
   color: var(--bg);
   opacity: 0.75;
 }
+
+
 
 .card:active {
   background: var(--accent-hover);
@@ -195,9 +225,13 @@ header h1::after {
   outline-offset: 2px;
 }
 
-/* Offline / unavailable card variant */
+/* Offline / unavailable card variant — dimmed via color, not opacity, to preserve contrast */
 .card--offline {
-  opacity: 0.6;
+  border-color: rgba(58, 44, 0, 0.55); /* border fades without dragging down text contrast */
+}
+
+.card--offline h2 {
+  color: var(--muted); /* match body copy level rather than full accent/text brightness */
 }
 
 .card--offline:hover,
@@ -209,28 +243,10 @@ header h1::after {
   text-shadow: inherit;
 }
 
-.card--offline:hover .icon,
-.card--offline:focus-visible .icon {
-  color: var(--accent);
-}
-
 .card--offline:hover p,
 .card--offline:focus-visible p {
   color: var(--muted);
   opacity: 1;
-}
-
-.card .icon {
-  font-size: 1rem;
-  line-height: 1;
-  color: var(--accent);
-  letter-spacing: 0;
-}
-
-/* Terminal selection prompt before menu items */
-.card .icon::before {
-  content: '> ';
-  opacity: 0.6;
 }
 
 .card h2 {
@@ -244,6 +260,7 @@ header h1::after {
   font-size: 0.875rem;
   color: var(--muted);
   line-height: 1.5;
+  overflow-wrap: break-word;
 }
 
 /* Shared page styles */
@@ -436,7 +453,8 @@ header h1::after {
   border: 1px solid var(--border);
   padding: 1.5rem 1.75rem;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* Projects styles */
@@ -495,6 +513,47 @@ header h1::after {
 
 .project-links a:hover { color: var(--accent-hover); }
 
+/* Resume page — body copy in sans-serif; terminal chrome stays monospace */
+.section-body,
+.entry ul,
+.skill-row > span:not(.skill-label) {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Resume page — back/print action bar */
+.page-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.page-actions .back {
+  margin-bottom: 0;
+}
+
+.print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-transform: uppercase;
+}
+
+.print-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   main,
@@ -541,6 +600,16 @@ header h1::after {
 }
 
 /* Print — resume should be readable on paper */
+@page {
+  margin: 0.5in 0.75in;
+  @top-left      { content: ""; }
+  @top-center    { content: ""; }
+  @top-right     { content: ""; }
+  @bottom-left   { content: ""; }
+  @bottom-center { content: ""; }
+  @bottom-right  { content: ""; }
+}
+
 @media print {
   :root {
     --bg: white;
@@ -573,12 +642,19 @@ header h1::after {
 
   .page {
     max-width: none;
-    padding: 0.6in 0.75in;
+    padding: 0;
     margin: 0;
   }
 
-  .back {
+  .skip-link,
+  .back,
+  .page-actions {
     display: none;
+  }
+
+  /* Remove touch-target padding from subtitle links — not needed in print */
+  .page .subtitle a {
+    padding-block: 0;
   }
 
   /* Remove decorative chrome */
@@ -588,13 +664,21 @@ header h1::after {
     border-color: #ddd;
   }
 
-  /* Avoid splitting entries across pages */
-  .entry {
-    break-inside: avoid;
+  /* Keep section heading with the first entry below it */
+  .section h2 {
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
-  .section {
-    break-inside: avoid;
+  /* Prevent page break between a section heading and its first entry */
+  .section h2 + .entry {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+
+  /* Remove default paragraph margins that create large gaps between sections */
+  p {
+    margin: 0;
   }
 
   /* Suppress terminal chrome decorations in print */

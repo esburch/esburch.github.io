@@ -1,3 +1,4 @@
 [submodule "resume-content"]
 	path = resume-content
 	url = https://github.com/esburch/resume.git
+	branch = main

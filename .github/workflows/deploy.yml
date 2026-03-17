@@ -22,6 +22,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Test token access
+        run: |
+          curl -sf -o /dev/null -w "%{http_code}" \
+            -H "Authorization: token ${{ secrets.RESUME_CONTENT_TOKEN }}" \
+            https://api.github.com/repos/esburch/resume || true
+
       - name: Checkout
         uses: actions/checkout@v4
         with:

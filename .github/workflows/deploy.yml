@@ -27,6 +27,7 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.RESUME_CONTENT_TOKEN }}
+          persist-credentials: true
 
       - name: Build resume from markdown
         run: python scripts/build_resume.py

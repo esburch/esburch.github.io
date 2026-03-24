@@ -35,6 +35,18 @@ jobs:
       - name: Build resume from markdown
         run: python scripts/build_resume.py
 
+      - name: Install Playwright
+        run: pip install playwright && playwright install --with-deps chromium
+
+      - name: Generate PDF
+        run: python scripts/build_pdf.py
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdf
+          path: resume.pdf
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

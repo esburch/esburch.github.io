@@ -614,18 +614,18 @@ header h1::after {
   :root {
     --bg: white;
     --surface: white;
-    --border: #ccc;
+    --border: #c8d4df;
     --text: #111;
     --muted: #444;
-    --accent: #333;
-    --accent-hover: #333;
+    --accent: #1a3a5c;
+    --accent-hover: #1a3a5c;
   }
 
   body {
     display: block;
     padding: 0;
     min-height: auto;
-    font-size: 10.5pt;
+    font-size: 11pt;
     background: white;
     color: #111;
   }
@@ -664,8 +664,22 @@ header h1::after {
     border-color: #ddd;
   }
 
+  /* Name header: navy underline separator */
+  .page h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid #1a3a5c;
+    margin-bottom: 0.4rem;
+  }
+
   /* Keep section heading with the first entry below it */
   .section h2 {
+    font-weight: 700;
+    border-bottom-width: 1.5px;
+    border-bottom-color: #1a3a5c;
+    margin-bottom: 0.75rem;
     break-after: avoid;
     page-break-after: avoid;
   }
@@ -674,6 +688,17 @@ header h1::after {
   .section h2 + .entry {
     break-before: avoid;
     page-break-before: avoid;
+  }
+
+  /* Prevent entries from splitting mid-content across pages */
+  .entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Job titles in accent navy */
+  .entry h3 {
+    color: #1a3a5c;
   }
 
   /* Remove default paragraph margins that create large gaps between sections */
@@ -704,7 +729,7 @@ header h1::after {
     display: none;
   }
 
-  /* Links: show href for external links, suppress for tel/mailto */
+  /* Links: show href for external links, suppress for tel/mailto/subtitle */
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
@@ -712,7 +737,8 @@ header h1::after {
   }
 
   a[href^="tel"]::after,
-  a[href^="mailto"]::after {
+  a[href^="mailto"]::after,
+  .subtitle a::after {
     content: none;
   }
 }
